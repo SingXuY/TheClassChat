@@ -7,15 +7,15 @@
     android:orientation="vertical">
 
     <include layout="@layout/header_base_func"/>
-    <com.example.library_activity_timetableview.view.WeekView
+    <com.example.library_activity_timetable.view.WeekView
         android:id="@+id/id_weekview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.example.library_activity_timetableview.Activity_TimetableView
+    <com.example.library_activity_timetable.Activity_TimetableView
         android:id="@+id/id_timetableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/timetable_bg"></com.example.library_activity_timetableview.Activity_TimetableView>
+        android:background="@color/timetable_bg"></com.example.library_activity_timetable.Activity_TimetableView>
 
 </LinearLayout>

@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <com.example.library_activity_timetableview.view.PerWeekView
+        <com.example.library_activity_timetable.view.PerWeekView
             android:id="@+id/id_perweekview"
             android:layout_marginTop="2dp"
             android:layout_width="35dp"

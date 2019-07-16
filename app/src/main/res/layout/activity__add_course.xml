@@ -7,10 +7,11 @@
     android:background="#E9F1F8">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="45dp"
         android:background="#fff"
         android:orientation="horizontal">
         <Button
+            android:layout_marginLeft="3dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/back_from_addCourse_button"
@@ -21,7 +22,7 @@
             android:layout_weight="1"
             android:text="编辑"
             android:gravity="center"
-            android:textSize="24sp"/>
+            android:textSize="20sp"/>
         <View
             android:layout_width="30dp"
             android:layout_height="30dp"/>
@@ -31,11 +32,11 @@
         android:orientation="horizontal"
         android:background="#FFF"
         android:layout_marginTop="20dp"
-        android:layout_height="70dp">
+        android:layout_height="50dp">
         <TextView
             android:layout_width="60dp"
             android:text="课名"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:gravity="center"
             android:layout_height="match_parent"/>
         <EditText android:layout_width="0dp"
@@ -44,7 +45,7 @@
             android:hint="未填写"
             android:layout_marginLeft="3dp"
             android:background="@null"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:layout_height="match_parent"/>
 
     </LinearLayout>
@@ -56,11 +57,11 @@
         <LinearLayout android:layout_width="match_parent"
             android:orientation="horizontal"
             android:background="#FFF"
-            android:layout_height="70dp">
+            android:layout_height="50dp">
             <TextView
                 android:layout_width="60dp"
                 android:text="教室"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:gravity="center"
                 android:layout_height="match_parent"/>
             <EditText android:layout_width="0dp"
@@ -69,7 +70,7 @@
                 android:background="@null"
                 android:hint="未填写"
                 android:layout_marginLeft="3dp"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:layout_height="match_parent"/>
 
         </LinearLayout>
@@ -77,11 +78,11 @@
             android:layout_marginTop="2dp"
             android:orientation="horizontal"
             android:background="#FFF"
-            android:layout_height="70dp">
+            android:layout_height="50dp">
             <TextView
                 android:layout_width="60dp"
                 android:text="老师"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:gravity="center"
                 android:layout_height="match_parent"/>
             <EditText android:layout_width="0dp"
@@ -90,14 +91,14 @@
                 android:background="@null"
                 android:hint="未填写"
                 android:layout_marginLeft="3dp"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:layout_height="match_parent"/>
         </LinearLayout>
         <LinearLayout android:layout_width="match_parent"
             android:layout_marginTop="2dp"
             android:orientation="horizontal"
             android:background="#FFF"
-            android:layout_height="60dp">
+            android:layout_height="50dp">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="0.6"
@@ -106,13 +107,13 @@
                 <TextView
                     android:layout_width="70dp"
                     android:text="星期"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:gravity="center"
                     android:layout_height="match_parent"/>
                 <EditText
                     android:layout_width="50dp"
                     android:id="@+id/get_course_day"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:inputType="number"
                     android:digits="1234567890"
                     android:layout_height="match_parent"/>
@@ -128,12 +129,12 @@
                     android:layout_width="50dp"
                     android:layout_marginLeft="3dp"
                     android:id="@+id/get_course_start"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:inputType="number"
                     android:digits="1234567890"
                     android:layout_height="match_parent"/>
                 <TextView android:layout_width="wrap_content"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:gravity="center"
                     android:text="至"
                     android:layout_height="match_parent"/>
@@ -141,12 +142,12 @@
                     android:layout_width="50dp"
                     android:layout_marginLeft="3dp"
                     android:id="@+id/get_course_end"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:inputType="number"
                     android:digits="1234567890"
                     android:layout_height="match_parent"/>
                 <TextView android:layout_width="wrap_content"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:gravity="center"
                     android:text="节"
                     android:layout_height="match_parent"/>
@@ -156,38 +157,22 @@
             android:layout_marginTop="2dp"
             android:orientation="horizontal"
             android:background="#FFF"
-            android:layout_height="60dp">
+            android:layout_height="50dp">
             <TextView android:layout_width="70dp"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:gravity="center"
                 android:text="周数"
                 android:layout_height="match_parent"/>
-            <EditText
-                android:layout_width="50dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/choose_week"
+                android:textSize="20sp"
                 android:layout_marginLeft="3dp"
-                android:id="@+id/get_course_startWeek"
-                android:textSize="24sp"
-                android:inputType="number"
-                android:digits="1234567890"
-                android:layout_height="match_parent"/>
-            <TextView android:layout_width="wrap_content"
-                android:textSize="24sp"
-                android:gravity="center"
-                android:text="至"
-                android:layout_height="match_parent"/>
-            <EditText
-                android:layout_width="50dp"
-                android:layout_marginLeft="3dp"
-                android:id="@+id/get_course_endWeek"
-                android:textSize="24sp"
-                android:inputType="number"
-                android:digits="1234567890"
-                android:layout_height="match_parent"/>
-            <TextView android:layout_width="wrap_content"
-                android:textSize="24sp"
-                android:gravity="center"
-                android:text="周"
-                android:layout_height="match_parent"/>
+                android:text="1~25周"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                />
 
         </LinearLayout>
 
@@ -197,9 +182,9 @@
     <LinearLayout android:layout_width="match_parent"
         android:orientation="vertical"
         android:background="#FFF"
-        android:layout_marginTop="30dp"
-        android:layout_height="60dp">
-        <Button android:layout_width="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_height="50dp">
+        <Button android:layout_width="match_parent"
             android:layout_gravity="center"
             android:textSize="24sp"
             android:id="@+id/add_button"
