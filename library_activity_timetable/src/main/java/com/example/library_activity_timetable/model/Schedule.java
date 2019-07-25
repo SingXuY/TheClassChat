@@ -13,6 +13,11 @@ import java.util.Map;
  */
 public class Schedule implements Serializable, Comparable<Schedule> {
 
+
+
+	//id
+	private String id;
+
 	/**
 	 * 课程名
 	 */
@@ -47,20 +52,13 @@ public class Schedule implements Serializable, Comparable<Schedule> {
 	 * 周几上
 	 */
 	private int day=0;
-	
-	/**
-	 *  一个随机数，用于对应课程的颜色
-	 */
-	private int colorRandom = 0;
 
 	/**
 	 * 额外信息
 	 */
 	private Map<String, Object> extras=new HashMap<>();
 	
-	public Schedule(String name, String room, String teacher,
-                    List<Integer> weekList, int start, int step, int day,
-                    int colorRandom) {
+	public Schedule(String name, String room, String teacher,List<Integer> weekList, int start, int step, int day,String id) {
 		super();
 		this.name = name;
 		this.room = room;
@@ -69,7 +67,7 @@ public class Schedule implements Serializable, Comparable<Schedule> {
 		this.start = start;
 		this.step = step;
 		this.day = day;
-		this.colorRandom = colorRandom;
+		this.id=id;
 	}
 
 	public Map<String, Object> getExtras(){
@@ -83,7 +81,6 @@ public class Schedule implements Serializable, Comparable<Schedule> {
 	public void putExtras(String key, Object val){
 		getExtras().put(key,val);
 	}
-
 
 	public String getName() {
 		return name;
@@ -141,16 +138,16 @@ public class Schedule implements Serializable, Comparable<Schedule> {
 		this.day = day;
 	}
 
-	public int getColorRandom() {
-		return colorRandom;
-	}
-
-	public void setColorRandom(int colorRandom) {
-		this.colorRandom = colorRandom;
-	}
-
 	public Schedule() {
 		super();
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override

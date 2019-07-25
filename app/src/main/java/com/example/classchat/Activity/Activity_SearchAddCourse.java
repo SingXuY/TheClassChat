@@ -1,51 +1,52 @@
 package com.example.classchat.Activity;
 
-//手动添加课程页面
+//自动添加课程页面
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.content.Intent;
 import android.widget.Button;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
-import android.widget.Toast;
-import android.util.Log;
-import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
-import java.util.*;
+import android.widget.Toast;
+import android.text.TextUtils;
 
 import com.example.classchat.Object.MySubject;
 import com.example.classchat.R;
 import com.example.classchat.Util.SharedUtil;
 
-public class Activity_AddCourse extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
 
+public class Activity_SearchAddCourse extends AppCompatActivity {
     //各格子控件
-    private EditText course;
-    private EditText teacher;
+    private TextView course;
+    private TextView teacher;
     private EditText dayOfWeek;
     private EditText room;
     private EditText start;
     private EditText end;
     private TextView choose_week;
-    private Button add;
+   //返回
     private Button back;
+    private Button add;
 
-    //提示框builder
+    //操作周数数组
+    private final String[] weeks= new String[]{"第1周","第2周","第3周","第4周","第5周","第6周","第7周","第8周","第9周","第10周","第11周","第12周","第13周","第14周","第15周","第16周","第17周","第18周","第19周","第20周","第21周","第22周","第23周","第24周","第25周"};
+    private boolean[] weeksChecked = new boolean[]{false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+    //周数选择对话框
+    private AlertDialog.Builder mutilChoicebuilder;
+    //提示对话框
     private AlertDialog.Builder builder1;
     private AlertDialog.Builder builder2;
     private AlertDialog.Builder builder3;
-    //周数多选框
-    private AlertDialog.Builder mutilChoicebuilder;
-    //配合周数多选框的数组
-    private final String[] weeks= new String[]{"第1周","第2周","第3周","第4周","第5周","第6周","第7周","第8周","第9周","第10周","第11周","第12周","第13周","第14周","第15周","第16周","第17周","第18周","第19周","第20周","第21周","第22周","第23周","第24周","第25周"};
-    private boolean[] weeksChecked = new boolean[]{false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
     //周数数组
     List<Integer> weeksnum=new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,25 +62,31 @@ public class Activity_AddCourse extends AppCompatActivity {
         }
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__add_course);
+        setContentView(R.layout.activity__search_add_course);
+
+        //从所选的搜索条目获取信息
+        Intent intent=getIntent();
+        final String id= (String) intent.getSerializableExtra("id");
+        final String course_name=(String)intent.getSerializableExtra("course");
+        final String teacher_name=(String)intent.getSerializableExtra("teacher");
 
         //绑定控件
-        add=(Button)findViewById(R.id.add_button);
+        add=(Button)findViewById(R.id.add_search_button);
+        back=(Button)findViewById(R.id.back_from_addCourse2_button);
         choose_week=(TextView)findViewById(R.id.choose_search_week);
-        course=(EditText) findViewById(R.id.get_course_name) ;
-        teacher=(EditText) findViewById(R.id.get_course_teacher);
-        room=(EditText)findViewById(R.id.get_course_room);
-        dayOfWeek=(EditText)findViewById(R.id.get_course_day);
-        start=(EditText)findViewById(R.id.get_course_start);
-        end=(EditText)findViewById(R.id.get_course_end);
-        back=(Button)findViewById(R.id.back_from_addCourse_button);
-        choose_week=(TextView)findViewById(R.id.choose_week);
+        course=(TextView)findViewById(R.id.get_search_course_name) ;
+        teacher=(TextView)findViewById(R.id.get_search_course_teacher);
+        room=(EditText)findViewById(R.id.get_search_course_room);
+        start=(EditText)findViewById(R.id.get_search_course_start);
+        end=(EditText)findViewById(R.id.get_search_course_end);
+        dayOfWeek=(EditText)findViewById(R.id.get_search_course_day);
+
+        //接收上一级页面参数
+        course.setText(course_name);
+        teacher.setText(teacher_name);
 
 
-
-
-
-        //周数多选框
+        //周数选择多选框
         mutilChoicebuilder = new AlertDialog.Builder(this);
         mutilChoicebuilder.setTitle("选择周数");
         mutilChoicebuilder.setMultiChoiceItems(weeks, weeksChecked, new DialogInterface.OnMultiChoiceClickListener() {
@@ -95,7 +102,7 @@ public class Activity_AddCourse extends AppCompatActivity {
                 int end = 0;
                 for(int i=0;i<weeksChecked.length;i++){
                     if(weeksChecked[i])
-                    weeksnum.add(i+1);
+                        weeksnum.add(i+1);
                 }
 
                 for(int i = 0; i < weeksChecked.length; i++)
@@ -127,7 +134,7 @@ public class Activity_AddCourse extends AppCompatActivity {
                     choose_week.setText(s);
                 }else{
                     //没有选择
-                    Toast.makeText(Activity_AddCourse.this, "未选择周数!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_SearchAddCourse.this, "未选择周数!", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -139,14 +146,13 @@ public class Activity_AddCourse extends AppCompatActivity {
 
             }
         });
-
+        //点击周数选择出现对话框
         choose_week.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mutilChoicebuilder.show();
             }
         });
-
 
 
 
@@ -182,54 +188,45 @@ public class Activity_AddCourse extends AppCompatActivity {
         });
 
 
-
-
-
-
-        //返回
-        back.setOnClickListener(new OnClickListener() {
+        //点击返回
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(Activity_AddCourse.this,Activity_AddSearchCourse.class);
+                intent.setClass(Activity_SearchAddCourse.this,Activity_AddSearchCourse.class);
                 startActivity(intent);
             }
         });
         //点击添加课程
-        add.setOnClickListener(new OnClickListener() {
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String room_=room.getText().toString();
-                String course_=course.getText().toString();
-                String teacher_=teacher.getText().toString();
                 int dayOfWeek_;
                 int start_;
                 int end_;
                 int step;
-                //若有文本框未编辑
-                if(TextUtils.isEmpty(teacher.getText())||TextUtils.isEmpty(course.getText())||TextUtils.isEmpty(room.getText())||TextUtils.isEmpty(dayOfWeek.getText())|| TextUtils.isEmpty(start.getText())||TextUtils.isEmpty(end.getText())||weeksnum.size()==0)
-                {
-                    builder1.show(); }
-                else {
+                if(TextUtils.isEmpty(room.getText())||TextUtils.isEmpty(dayOfWeek.getText())|| TextUtils.isEmpty(start.getText())||TextUtils.isEmpty(end.getText())||weeksnum.size()==0)
+                {builder1.show();}
+                else{
                     dayOfWeek_=Integer.parseInt(dayOfWeek.getText().toString());
                     start_=Integer.parseInt(start.getText().toString());
                     end_=Integer.parseInt(end.getText().toString());
                     step=end_-start_+1;
-                    //若结束节次小于开始节次
-                    if (end_ < start_) { builder2.show(); }
+                    if(end_<start_) {builder2.show();}
                     else if(dayOfWeek_<1||dayOfWeek_>7){builder3.show();}
                     else {
-                        MySubject item=new MySubject( course_, room_, teacher_, weeksnum, start_, step, dayOfWeek_, null);
+                        MySubject item=new MySubject( course_name, room_, teacher_name, weeksnum, start_, step, dayOfWeek_,id);
 
 
-
+                        //todo 这里是确定添加的代码块，需要存该学生已存了这节课，id在上面。
                         Intent intent = new Intent();
-                        intent.setClass(Activity_AddCourse.this,MainActivity.class);
+                        intent.setClass(Activity_SearchAddCourse.this,MainActivity.class);
                         startActivity(intent);
+
                     }
                 }
             }
         });
-
     }
 }

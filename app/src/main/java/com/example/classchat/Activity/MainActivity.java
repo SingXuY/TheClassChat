@@ -1,8 +1,11 @@
 package com.example.classchat.Activity;
 
+import android.animation.Animator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,18 +14,25 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.classchat.Fragment.Fragment_ClassBox;
 import com.example.classchat.Fragment.Fragment_Forum;
 import com.example.classchat.Fragment.Fragment_SelfInformationCenter;
 import com.example.classchat.Fragment.Fragment_Shopping;
 import com.example.classchat.R;
+import com.example.classchat.Util.SharedUtil;
+import com.example.classchat.Util.ThemeUIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+
+
+
 
     //    private Toolbar mToolbar;
     private BottomNavigationView mBottomNavigationView;
@@ -59,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(SharedUtil.getShartData(this,"name").equals("0")){
+            SharedUtil.setShartData(this,"day");
+        }
+        if(SharedUtil.getShartData(this,"name").equals("night")){
+            //设置夜晚主题  需要在setContentView之前
+            setTheme(R.style.nightTheme);
+        }else{
+            //设置白天主题
+            setTheme(R.style.dayTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
@@ -72,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 //        mToolbar = findViewById(R.id.toolbar);
 //
 //    }
+
 
     public void initData() {
 //        setSupportActionBar(mToolbar);
@@ -110,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+
 
 
     private void setFragmentPosition(int position) {

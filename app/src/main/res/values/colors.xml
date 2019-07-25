@@ -16,5 +16,9 @@
     <color name="app_white">#ffffff</color>
 
     <color name="layer_grid_line">#000000</color>
-    <color name="timetable_bg">#8D91AA</color>
+
+
+    <color name="coursedetail_bg">#8D91AA</color>
+
+
 </resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="?attr/search_list_item_bg"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="200dp"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:layout_height="90dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/searchCourseName"
+            android:layout_weight="2.5"
+            android:textColor="?attr/search_top_edit_textcolor"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:text="离散数学"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_height="0dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+            android:layout_height="0dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="?attr/search_top_edit_textcolor"
+                android:id="@+id/searchTeacher"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="吴永贤"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:id="@+id/searchMajor"
+                android:gravity="center"
+                android:textColor="?attr/search_top_edit_textcolor"
+                android:textSize="18dp"
+                android:text="18信安"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/searchChoose"
+            android:layout_width="60dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="10dp"
+            android:background="?attr/search_list_item_bt_bg"
+            android:gravity="center"
+            android:textColor="?attr/search_list_item_bt_textcolor"
+            android:text="选择"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

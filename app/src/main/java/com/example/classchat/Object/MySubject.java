@@ -1,4 +1,4 @@
-package com.example.classchat.model;
+package com.example.classchat.Object;
 
 import com.example.library_activity_timetable.model.Schedule;
 import com.example.library_activity_timetable.model.ScheduleEnable;
@@ -15,15 +15,13 @@ public class MySubject implements ScheduleEnable {
 	public static final String EXTRAS_ID="extras_id";
 	public static final String EXTRAS_AD_URL="extras_ad_url";
 
-	private int id=0;
+	private String id;
+
 
 	/**
 	 * 课程名
 	 */
 	private String name;
-
-	//无用数据
-	private String time;
 	
 	/**
 	 * 教室
@@ -54,13 +52,8 @@ public class MySubject implements ScheduleEnable {
 	 * 周几上
 	 */
 	private int day;
-	
-	private String term;
 
-	/**
-	 *  一个随机数，用于对应课程的颜色
-	 */
-	private int colorRandom = 0;
+
 
 	private String url;
 
@@ -76,25 +69,12 @@ public class MySubject implements ScheduleEnable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setTime(String time) {
-		this.time = time;
-	}
-	
-	public String getTime() {
-		return time;
-	}
-	
-	public void setTerm(String term) {
-		this.term = term;
-	}
-	
-	public String getTerm() {
-		return term;
-	}
-	
-	public MySubject(String term, String name, String room, String teacher, List<Integer> weekList, int start, int step, int day, int colorRandom, String time) {
+
+
+
+	public MySubject(String name, String room, String teacher, List<Integer> weekList, int start, int step, int day, String id) {
 		super();
-		this.term=term;
+		this.id=id;
 		this.name = name;
 		this.room = room;
 		this.teacher = teacher;
@@ -102,8 +82,6 @@ public class MySubject implements ScheduleEnable {
 		this.start = start;
 		this.step = step;
 		this.day = day;
-		this.colorRandom = colorRandom;
-		this.time=time;
 	}
 
 	public String getName() {
@@ -162,17 +140,10 @@ public class MySubject implements ScheduleEnable {
 		this.day = day;
 	}
 
-	public int getColorRandom() {
-		return colorRandom;
-	}
-
-	public void setColorRandom(int colorRandom) {
-		this.colorRandom = colorRandom;
-	}
-
 	@Override
 	public Schedule getSchedule() {
 		Schedule schedule=new Schedule();
+		schedule.setId(getId());
 		schedule.setDay(getDay());
 		schedule.setName(getName());
 		schedule.setRoom(getRoom());
@@ -180,17 +151,16 @@ public class MySubject implements ScheduleEnable {
 		schedule.setStep(getStep());
 		schedule.setTeacher(getTeacher());
 		schedule.setWeekList(getWeekList());
-		schedule.setColorRandom(2);
 		schedule.putExtras(EXTRAS_ID,getId());
 		schedule.putExtras(EXTRAS_AD_URL,getUrl());
 		return schedule;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 }

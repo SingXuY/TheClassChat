@@ -1,16 +1,12 @@
 package com.example.library_activity_timetable.model;
 
-import android.content.Context;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -137,47 +133,15 @@ public class ScheduleSupport {
     //*****************
 
     /**
-     * 模拟分配颜色，将源数据的colorRandom属性赋值，
-     * 然后根据该属性值在颜色池中查找颜色即可
      *
      * @param schedules 源数据
      * @return colorRandom属性已有值
      */
     public static List<Schedule> getColorReflect(List<Schedule> schedules) {
         if (schedules == null || schedules.size() == 0) return null;
-
-        //保存课程名、颜色的对应关系
-        Map<String, Integer> colorMap = new HashMap<>();
-        int colorCount = 1;
-
-        //开始转换
-        for (int i = 0; i < schedules.size(); i++) {
-            Schedule mySubject = schedules.get(i);
-            //计算课程颜色
-            int color;
-            if (colorMap.containsKey(mySubject.getName())) {
-                color = colorMap.get(mySubject.getName());
-            } else {
-                colorMap.put(mySubject.getName(), colorCount);
-                color = colorCount;
-                colorCount++;
-            }
-            mySubject.setColorRandom(color);
-        }
-
         return schedules;
     }
 
-    /**
-     * 内部使用的是:context.getResources().getDimensionPixelSize(dp);
-     *
-     * @param context
-     * @param dp
-     * @return
-     */
-    public static int getPx(Context context, int dp) {
-        return context.getResources().getDimensionPixelSize(dp);
-    }
 
     /**
      * 转换，将自定义类型转换为List<Schedule>
@@ -189,6 +153,31 @@ public class ScheduleSupport {
         List<Schedule> data = new ArrayList<>();
         for (int i = 0; i < dataSource.size(); i++) {
             if (dataSource.get(i) != null) data.add(dataSource.get(i).getSchedule());
+        }
+        return data;
+    }
+
+    //课程名称**根据id
+    public static List<Schedule> transform_only_names(List<? extends ScheduleEnable> dataSource) {
+        List<Schedule> data = new ArrayList<>();
+        int i;
+        boolean judge;
+        //设置首值
+        for (i = 0; i < dataSource.size(); i++) {
+            if (dataSource.get(i) != null) {
+                data.add(dataSource.get(i).getSchedule());
+                break;
+            }
+        }
+        for(int j=i+1;j < dataSource.size();j++){
+            judge=true;
+            if (dataSource.get(j) != null) {
+                /*for(int k=0;k<j;k++){
+                    if((dataSource.get(j).getSchedule().getId()).equals(data.get(k).getId()))
+                        judge=false;
+                }*/
+                if(judge) data.add(dataSource.get(j).getSchedule());
+            }
         }
         return data;
     }
@@ -266,6 +255,16 @@ public class ScheduleSupport {
                 result.add(data.get(i));
         }
         return result;
+    }
+
+    /**
+     * 返回点击的课程
+     *
+     * @param subject
+     * @return
+     */
+    public static Schedule findSubject(Schedule subject) {
+        return subject;
     }
 
     /**
@@ -349,4 +348,5 @@ public class ScheduleSupport {
         sortList(list);
         return list;
     }
+
 }

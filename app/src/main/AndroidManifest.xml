@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".Activity.Activity_AddCourse"></activity>
+        <activity android:name=".Activity.Activity_SearchAddCourse"></activity>
+        <activity android:name=".Activity.Activity_AddSearchCourse" />
+        <activity android:name=".Activity.Activity_AddCourse" />
         <activity android:name=".Activity.Activity_TransactionHistory" />
         <activity android:name=".Activity.Activity_MyWallet" />
         <activity android:name=".Activity.Activity_AboutUs" />

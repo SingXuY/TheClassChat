@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.example.library_activity_timetable.Activity_TimetableView;
 import com.example.library_activity_timetable.model.Schedule;
 
-import java.util.List;
-
 /**
  * 与Schedule有关的接口.
  */
@@ -25,9 +23,9 @@ public interface ISchedule {
          * 当课程项被点击时回调
          *
          * @param v
-         * @param scheduleList 该位置的所有课程
+         * @param schedule 该位置的所有课程
          */
-        void onItemClick(View v, List<Schedule> scheduleList);
+        void onItemClick(View v, Schedule schedule);
     }
 
     /**

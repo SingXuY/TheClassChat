@@ -6,6 +6,6 @@
     android:gravity="center_vertical|center_horizontal"
     android:textSize="12sp"
     android:textStyle="bold"
-    android:textColor="#DCE2EC">
+    android:textColor="?attr/mon_textcolor">
 
 </TextView>

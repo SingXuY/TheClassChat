@@ -24,7 +24,7 @@ import java.util.List;
  * 每一项均为PerWeekView<br/>
  */
 
-public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
+public class WeekView extends LinearLayout implements WeekViewEnable<WeekView> {
 
     private static final String TAG = "WeekView";
     LayoutInflater mInflate;
@@ -50,7 +50,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView>{
     private int preIndex=1;
 
     //多少项
-    private int itemCount = 20;
+    private int itemCount = 25;
 
     private IWeekView.OnWeekItemClickedListener onWeekItemClickedListener;
     private IWeekView.OnWeekLeftClickedListener onWeekLeftClickedListener;

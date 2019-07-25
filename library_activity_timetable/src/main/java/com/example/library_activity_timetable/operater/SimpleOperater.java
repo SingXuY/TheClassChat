@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.library_activity_timetable.Activity_TimetableView;
 import com.example.library_activity_timetable.R;
+
 import com.example.library_activity_timetable.listener.ISchedule;
 import com.example.library_activity_timetable.model.Schedule;
 import com.example.library_activity_timetable.model.ScheduleConfig;
@@ -35,7 +36,7 @@ import java.util.List;
  *
  */
 
-public class SimpleOperater extends AbsOperater{
+public class SimpleOperater extends AbsOperater {
 
     private static final String TAG = "SimpleOperater";
 
@@ -53,7 +54,6 @@ public class SimpleOperater extends AbsOperater{
     protected LinearLayout containerLayout;//根布局
     protected LinearLayout dateLayout;//根布局、日期栏容器
     protected LinearLayout flagLayout;//旗标布局
-
     protected ScheduleConfig scheduleConfig;
 
     @Override
@@ -189,7 +189,7 @@ public class SimpleOperater extends AbsOperater{
             if(clist!=null){
                 for(int k=0;k<clist.size();k++){
                     Schedule p=clist.get(k);
-                    if(p!=null&&ScheduleSupport.isThisWeek(p,curWeek)) count++;
+                    if(p!=null&& ScheduleSupport.isThisWeek(p,curWeek)) count++;
                 }
             }
             if (count > 1) {
@@ -206,7 +206,8 @@ public class SimpleOperater extends AbsOperater{
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Schedule> result = ScheduleSupport.findSubjects(subject, originData);
+                //List<Schedule> result = ScheduleSupport.findSubjects(subject, originData);
+                Schedule result = ScheduleSupport.findSubject(subject);
                 mView.onItemClickListener().onItemClick(v, result);
             }
         });

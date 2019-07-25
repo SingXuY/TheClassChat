@@ -1,31 +1,37 @@
 package com.example.classchat.Fragment;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-
-import com.example.classchat.Activity.Activity_AddCourse;
-import com.example.classchat.R;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.PopupMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.support.v7.app.AlertDialog;
-import android.support.v7.view.menu.MenuPopupHelper;
-import android.support.v7.widget.PopupMenu;
-
-import com.example.classchat.model.MySubject;
+import com.example.classchat.Activity.Activity_AddSearchCourse;
+import com.example.classchat.Activity.Activity_ClassDetailInformation;
+import com.example.classchat.Activity.MainActivity;
+import com.example.classchat.Object.MySubject;
+import com.example.classchat.R;
+import com.example.classchat.Util.SharedUtil;
+import com.example.classchat.Util.ThemeUIUtil;
 import com.example.classchat.model.SubjectRepertory;
 import com.example.library_activity_timetable.Activity_TimetableView;
 import com.example.library_activity_timetable.listener.ISchedule;
@@ -46,7 +52,7 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
     //控件
     Activity_TimetableView mTimetableView;
     WeekView mWeekView;
-
+    private View view;
     ImageButton moreButton;
     LinearLayout layout;
     TextView titleTextView;
@@ -70,7 +76,7 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
                 showPopmenu();
             }
         });
-
+        view=getActivity().findViewById(R.id.activity_main_timetable);
         mySubjects = SubjectRepertory.loadDefaultSubjects2();
         mySubjects.addAll(SubjectRepertory.loadDefaultSubjects());
         titleTextView = (TextView)getActivity().findViewById(R.id.id_title);
@@ -88,9 +94,9 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
         mTimetableView = (Activity_TimetableView)getActivity().findViewById(R.id.id_timetableView);
 
         //设置周次选择属性
-
+        mTimetableView.curWeek("2019-07-01 00:00:00");
         mWeekView.source(mySubjects)
-                .curWeek(1)
+                .curWeek(mTimetableView.curWeek())
                 .callback(new IWeekView.OnWeekItemClickedListener() {
                     @Override
                     public void onWeekClicked(int week) {
@@ -111,18 +117,15 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
                 .showView();
 
         mTimetableView.source(mySubjects)
-                .curWeek(1)
+//                .curWeek("2019-07-10")
                 .curTerm("大三下学期")
-                .maxSlideItem(10)
+                .maxSlideItem(12)
                 .monthWidthDp(30)
-                //透明度
-                //日期栏0.1f、侧边栏0.1f，周次选择栏0.6f
-                //透明度范围为0->1，0为全透明，1为不透明
-//                .alpha(0.1f, 0.1f, 0.6f)
+
                 .callback(new ISchedule.OnItemClickListener() {
                     @Override
-                    public void onItemClick(View v, List<Schedule> scheduleList) {
-                        display(scheduleList);
+                    public void onItemClick(View v, Schedule schedule) {
+                        display(schedule);
                     }
                 })
                 .callback(new ISchedule.OnItemLongClickListener() {
@@ -168,7 +171,7 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
      * 对话框修改当前周次
      */
     protected void onWeekLeftLayoutClicked() {
-        final String items[] = new String[20];
+        final String items[] = new String[25];
         int itemCount = mWeekView.itemCount();
         for (int i = 0; i < itemCount; i++) {
             items[i] = "第" + (i + 1) + "周";
@@ -197,27 +200,35 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
     }
 
     /**
-     * 显示内容
      *
-     * @param beans
+     * @param bean
      */
-    protected void display(List<Schedule> beans) {
-        String str = "";
-        for (Schedule bean : beans) {
-            str += bean.getName() + ","+bean.getWeekList().toString()+","+bean.getStart()+","+bean.getStep()+"\n";
-        }
-        Toast.makeText(this.getActivity(), str, Toast.LENGTH_SHORT).show();
+    protected void display(Schedule bean) {
+/*
+        Toast.makeText(getActivity(),
+                bean.getName(),
+                Toast.LENGTH_SHORT).show();
+ */
+        Intent coursedetail=new Intent(getActivity(), Activity_ClassDetailInformation.class);
+        coursedetail.putExtra("coursename",bean.getName());
+        coursedetail.putExtra("courseday",bean.getDay());
+        coursedetail.putExtra("courseplace",bean.getRoom());
+        coursedetail.putExtra("coursestart",bean.getStart());
+        coursedetail.putExtra("coursestep",bean.getStep());
+        coursedetail.putExtra("courseteacher",bean.getTeacher());
+        startActivity(coursedetail);
+
     }
 
     /**
      * 显示弹出菜单
      */
-
     @SuppressLint("RestrictedApi")
     public void showPopmenu() {
         PopupMenu popup = new PopupMenu(this.getActivity(), moreButton);
         popup.getMenuInflater().inflate(R.menu.tabletime_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_add_course:
@@ -236,6 +247,9 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
                     case R.id.menu_hideweekend:
                         hideWeekends();
                         break;
+                    case R.id.menu_changestyle:
+                        changstyle();
+                        break;
                     default:
                         break;
                 }
@@ -248,9 +262,7 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
             MenuPopupHelper mPopup = (MenuPopupHelper) mpopup.get(popup);
             mPopup.setForceShowIcon(true);
         } catch (Exception e) {
-
         }
-
         popup.show();
     }
 
@@ -261,10 +273,9 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
             case R.id.id_layout:
                 //如果周次选择已经显示了，那么将它隐藏，更新课程、日期
                 //否则，显示
-
                 if (mWeekView.isShowing()) {
                     mWeekView.isShow(false);
-                    titleTextView.setTextColor(getResources().getColor(R.color.app_pinkpoint));
+                    titleTextView.setTextColor(getResources().getColor(R.color.app_black));
                     int cur = mTimetableView.curWeek();
                     mTimetableView.onDateBuildListener()
                             .onUpdateDate(cur, cur);
@@ -297,15 +308,8 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
      * 最后更新一下视图（全局更新）
      */
     protected void addSubject() {
-        Intent add = new Intent(this.getActivity(), Activity_AddCourse.class);
+        Intent add = new Intent(getActivity(), Activity_AddSearchCourse.class);
         startActivity(add);
-        /*List<Schedule> dataSource = mTimetableView.dataSource();
-        int size = dataSource.size();
-        if (size > 0) {
-            Schedule schedule = dataSource.get(0);
-            dataSource.add(schedule);
-            mTimetableView.updateView();
-        }*/
     }
 
     /**
@@ -317,6 +321,8 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
      */
     protected void hideNonThisWeek() {
         mTimetableView.isShowNotCurWeek(false).updateView();
+        mWeekView.curWeek(mTimetableView.curWeek()).updateView();
+        mTimetableView.changeWeekForce(mTimetableView.curWeek());
     }
 
     /**
@@ -326,17 +332,9 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
      */
     protected void showNonThisWeek() {
         mTimetableView.isShowNotCurWeek(true).updateView();
+        mWeekView.curWeek(mTimetableView.curWeek()).updateView();
+        mTimetableView.changeWeekForce(mTimetableView.curWeek());
     }
-
-    /**
-     * 设置侧边栏最大节次，只影响侧边栏的绘制，对课程内容无影响
-     *
-     * @param num
-     */
-    protected void setMaxItem(int num) {
-        mTimetableView.maxSlideItem(num).updateSlideView();
-    }
-
 
     /**
      * 显示WeekView
@@ -354,19 +352,6 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
         mWeekView.isShow(false);
     }
 
-    /**
-     * 设置月份宽度
-     */
-    private void setMonthWidth() {
-        mTimetableView.monthWidthDp(50).updateView();
-    }
-
-    /**
-     * 设置月份宽度,默认40dp
-     */
-    private void resetMonthWidth() {
-        mTimetableView.monthWidthDp(40).updateView();
-    }
 
     /**
      * 隐藏周末
@@ -378,7 +363,35 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
     /**
      * 显示周末
      */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void showWeekends() {
         mTimetableView.isShowWeekends(true).updateView();
+
+
     }
-}
+    private void changstyle(){
+        //我们先取这个根布局的 bitmap缓存
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache(true);
+        final Bitmap localBitmap=Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
+        if(SharedUtil.getShartData(getActivity(),"name").equals("night")){
+            SharedUtil.setShartData(getActivity(),"day");
+
+//                    recreate();
+            getActivity().setTheme(R.style.dayTheme);
+            getActivity().recreate();
+
+        }else{
+            SharedUtil.setShartData(getActivity(),"night");
+//                    recreate();
+            getActivity().setTheme(R.style.nightTheme);
+            getActivity().recreate();
+
+        }
+
+    }
+
+
+    }
+

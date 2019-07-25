@@ -80,7 +80,7 @@ public class SubjectExtras implements ScheduleEnable {
 		return term;
 	}
 
-	public SubjectExtras(String term, String name, String room, String teacher, List<Integer> weekList, int start, int step, int day, int colorRandom, String time) {
+	public SubjectExtras(String term, String name, String room, String teacher, List<Integer> weekList, int start, int step, int day) {
 		super();
 		this.term=term;
 		this.name = name;
@@ -90,8 +90,6 @@ public class SubjectExtras implements ScheduleEnable {
 		this.start = start;
 		this.step = step;
 		this.day = day;
-		this.colorRandom = colorRandom;
-		this.time=time;
 	}
 
 	public String getName() {
@@ -168,7 +166,6 @@ public class SubjectExtras implements ScheduleEnable {
 		schedule.setStep(getStep());
 		schedule.setTeacher(getTeacher());
 		schedule.setWeekList(getWeekList());
-		schedule.setColorRandom(2);
 		schedule.putExtras(EXTRAS_ID,getId());
 		return schedule;
 	}

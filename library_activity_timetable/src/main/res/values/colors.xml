@@ -125,16 +125,21 @@
 
     <color name="app_refresh_black">#333333</color>
     <color name="app_course_chooseweek_bg">#CC8D91AA</color>
-    <color name="app_course_chooseweek_bg2">#BB8D91AA</color>
     <color name="app_course_chooseweek_lightbg">#DCE2EC</color>
 
 
     <!--  kk添加的新颜色 -->
     <color name="orangeline">#C3FF7F00</color>
     <color name="app_course_item_bg">#FFFFFF</color>
-    <color name="app_pinkpoint">#FFB5C4</color>
     <color name="line_blue">#728FBB</color>
     <color name="bg_gray">#C3C3C3C3</color>
+
+    <!-- 课程细节菜单颜色 -->
+    <color name="coursedetail_bg">#8D91AA</color>
+    <color name="coursedetail_color_1">#8F82C1</color>
+    <color name="coursedetail_color_2">#DDB0A87B</color>
+    <color name="coursedetail_color_3">#663E3F53</color>
+    <color name="coursedetail_color_4">#77676634</color>
 
 
 

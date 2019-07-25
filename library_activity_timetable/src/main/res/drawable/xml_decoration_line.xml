@@ -7,7 +7,7 @@
             <corners
                 android:bottomLeftRadius="7dp"
                 android:bottomRightRadius="7dp"/>
-            <solid android:color="#FAD0C4" />
+            <solid android:color="?attr/thisweek_line" />
         </shape>
     </item>
     <!-- 主体背景颜色值 -->
@@ -18,7 +18,7 @@
             <corners
                 android:bottomLeftRadius="7dp"
                 android:bottomRightRadius="7dp"/>
-            <solid android:color="#F9F5F1" />
+            <solid android:color="?attr/thisweek_bg" />
         </shape>
     </item>
 </layer-list>
