@@ -15,12 +15,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.example.classchat.Object.MySubject;
 import com.example.classchat.R;
 import com.example.classchat.Util.SharedUtil;
+import com.example.classchat.Util.Util_Net;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Activity_SearchAddCourse extends AppCompatActivity {
     //各格子控件
@@ -218,11 +229,27 @@ public class Activity_SearchAddCourse extends AppCompatActivity {
                     else {
                         MySubject item=new MySubject( course_name, room_, teacher_name, weeksnum, start_, step, dayOfWeek_,id);
 
+                        RequestBody requestBody = new FormBody.Builder()
+                                .add("id","这应该有一个从MainActivity传来的StudentId")
+                                .add("student", JSON.toJSONString(item))
+                                .build();
 
-                        //todo 这里是确定添加的代码块，需要存该学生已存了这节课，id在上面。
-                        Intent intent = new Intent();
-                        intent.setClass(Activity_SearchAddCourse.this,MainActivity.class);
-                        startActivity(intent);
+                        Util_Net.sendOKHTTPRequest("", requestBody, new Callback() {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                boolean responseData = Boolean.parseBoolean(response.body().string());
+                                if (responseData) {
+                                    Intent intent = new Intent();
+                                    intent.setClass(Activity_SearchAddCourse.this,MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
 
                     }
                 }
