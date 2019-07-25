@@ -16,11 +16,25 @@ import android.widget.Toast;
 import android.util.Log;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import java.io.IOException;
 import java.util.*;
 
+import com.alibaba.fastjson.JSON;
 import com.example.classchat.Object.MySubject;
 import com.example.classchat.R;
 import com.example.classchat.Util.SharedUtil;
+import com.example.classchat.Util.Util_BlockchainTool;
+import com.example.classchat.Util.Util_Net;
+
+import org.jetbrains.annotations.NotNull;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Activity_AddCourse extends AppCompatActivity {
 
@@ -219,9 +233,7 @@ public class Activity_AddCourse extends AppCompatActivity {
                     if (end_ < start_) { builder2.show(); }
                     else if(dayOfWeek_<1||dayOfWeek_>7){builder3.show();}
                     else {
-                        MySubject item=new MySubject( course_, room_, teacher_, weeksnum, start_, step, dayOfWeek_, null);
-
-
+                        MySubject item = new MySubject( course_, room_, teacher_, weeksnum, start_, step, dayOfWeek_, null);
 
                         Intent intent = new Intent();
                         intent.setClass(Activity_AddCourse.this,MainActivity.class);

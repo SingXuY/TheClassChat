@@ -2,8 +2,11 @@ package com.example.classchat.Activity;
 
 //搜索添加课程界面
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,11 +18,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.example.classchat.Adapter.Adapter_SearchCourseListView;
 import com.example.classchat.Util.SharedUtil;
+import com.example.classchat.Util.Util_Net;
 import com.example.classchat.model.AddCourseDataBase;
 import com.example.classchat.R;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.*;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class Activity_AddSearchCourse extends AppCompatActivity {
@@ -31,8 +50,23 @@ public class Activity_AddSearchCourse extends AppCompatActivity {
     private Button back;
     private Button add;
     private Context mContext;
-    @Override
+    private List<AddCourseDataBase> items;
 
+    private static final int GET = 1;
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            switch (msg.what){
+                case GET:
+                    list.setAdapter(new Adapter_SearchCourseListView(mContext,items));
+                    break;
+            }
+        }
+    };
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         if(SharedUtil.getShartData(this,"name").equals("0")){
             SharedUtil.setShartData(this,"day");
@@ -92,17 +126,40 @@ public class Activity_AddSearchCourse extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 //todo s.toString()为输入的关键字，这里需要写把关键字发给数据库和返回一个包含(id，课程名，老师，专业)
                 // （固定顺序）的二维string数组的函数，数组给hoolder赋值；
-                String [][]holder=new String[4][];
+                final RequestBody requestBody = new FormBody.Builder()
+                        .add("info", "这里的信息时从MainActivity传来的学院和大学")
+                        .add("key", s.toString())
+                        .build();
 
+                Util_Net.sendOKHTTPRequest("", requestBody, new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-               //根据holder内容创建listview
-                int size=holder[1].length;
-                List<AddCourseDataBase> items=new ArrayList<AddCourseDataBase>();
-                for(int i=0;i<size;i++){
-                    AddCourseDataBase item=new AddCourseDataBase(holder[1][i],holder[2][i],holder[3][i],holder[4][i]);
-                    items.add(item);
-                }
-                list.setAdapter(new Adapter_SearchCourseListView(mContext,items));
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                        String responsedata = response.body().string();
+
+                        List<AddCourseDataBase> items = new ArrayList<AddCourseDataBase>();
+
+                        try {
+                            JSONArray jsonArray = new JSONArray(responsedata);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                AddCourseDataBase item=new AddCourseDataBase(jsonObject.getString("groupChatId"), jsonObject.getString("courseName"), jsonObject.getString("teacher"), jsonObject.getString("students"));
+                                items.add(item);
+                            }
+                            Message message = new Message();
+                            message.what = GET;
+                            handler.sendMessage(message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
             }
         });
 
