@@ -43,37 +43,5 @@
         <attr name="gray_color" format="color"/>
 
     </declare-styleable>
-    <attr name="timetable_bg" format="reference|color" />
-    <attr name="nothisweek_bg" format="reference|color" />
-    <attr name="thisweek_line" format="reference|color" />
-    <attr name="thisweek_bg" format="reference|color" />
-    <attr name="message_point_bg" format="reference|color" />
-    <attr name="mon_textcolor" format="reference|color" />
-    <attr name="dayOfWeek_textcolor" format="reference|color" />
-    <attr name="date_textcolor" format="reference|color" />
-    <attr name="changeweek_bt_bg" format="reference|color" />
-    <attr name="changeweek_bt_text_bg" format="reference|color" />
-    <attr name="weekview_thisweek_bg" format="reference|color" />
-    <attr name="weekview_right_bg" format="reference|color" />
-    <attr name="add_edit_view_bg" format="reference|color" />
-    <attr name="add_edit_bar_view_bg" format="reference|color" />
-    <attr name="add_edit_all_textcolor" format="reference|color" />
-    <attr name="add_bt_textcolor" format="reference|color" />
-    <attr name="search_top_bg" format="reference|color" />
-    <attr name="search_top_edit_bg" format="reference|color" />
-    <attr name="search_top_edit_textcolor" format="reference|color" />
-    <attr name="search_bg" format="reference|color" />
-    <attr name="search_list_item_bg" format="reference|color" />
-    <attr name="search_list_item_textcolor" format="reference|color" />
-    <attr name="search_list_item_bt_bg" format="reference|color" />
-    <attr name="search_list_item_bt_textcolor" format="reference|color" />
-    <attr name="details_textcolor_1" format="reference|color" />
-    <attr name="details_textcolor_2" format="reference|color" />
-    <attr name="details_textcolor_3" format="reference|color" />
-    <attr name="details_view_bg1" format="reference|color" />
-    <attr name="details_view_bg" format="reference|color" />
-    <attr name="details_view_border" format="reference|color" />
-    <attr name="navigation_bar_bg" format="reference|color" />
-    <attr name="timetable_topbar_bg" format="reference|color" />
-    <attr name="timetable_topbar_hint_textcolor" format="reference|color" />
+
 </resources>

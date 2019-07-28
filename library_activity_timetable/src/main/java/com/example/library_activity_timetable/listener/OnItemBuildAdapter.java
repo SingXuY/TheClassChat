@@ -16,15 +16,26 @@ public class OnItemBuildAdapter implements ISchedule.OnItemBuildListener {
         if (schedule == null || TextUtils.isEmpty(schedule.getName())) return "未命名";
         if (schedule.getRoom() == null) {
             if (!isThisWeek)
-                return "[非本周]" + schedule.getName();
+                return "[非本周]\n" + schedule.getName();
             return schedule.getName();
         }
-
-        String r = schedule.getName() + "@" + schedule.getRoom();
-        if (!isThisWeek) {
-            r = "[非本周]" + r;
+        if (schedule.getName().length()<=9)
+        {
+            String r = schedule.getName() + "\n\n@" + schedule.getRoom();
+            if (!isThisWeek) {
+                r = "[非本周]\n" + r;
+            }
+            return r;
         }
-        return r;
+        else
+        {
+            String r = schedule.getName().substring(0,7)+".." + "\n@" + schedule.getRoom();
+            if (!isThisWeek) {
+                r = "[非本周]\n" + r;
+            }
+            return r;
+        }
+
     }
 
     @Override

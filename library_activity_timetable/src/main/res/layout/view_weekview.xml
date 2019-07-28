@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:id="@+id/id_root"
-    android:background="@color/app_white"
+    android:background="#22717171"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -12,13 +12,13 @@
         android:layout_width="60dp"
         android:layout_height="90dp"
         android:gravity="center"
-        android:background="?attr/changeweek_bt_bg"
+        android:background="#44717171"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:textColor="?attr/changeweek_bt_text_bg"
+            android:textColor="#BB000000"
             android:text="  修改  \n当前周"/>
     </LinearLayout>
 
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:scrollbars="none"
-        android:background="?attr/weekview_right_bg">
+        android:background="#BBFFFFFF">
         <LinearLayout
             android:id="@+id/id_weekview_container"
             android:layout_width="match_parent"

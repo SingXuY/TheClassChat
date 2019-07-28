@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="?attr/navigation_bar_bg">
+    android:background="#BB00D8A0">
 
     <LinearLayout
         android:id="@+id/id_layout"
@@ -16,14 +16,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="课程表"
-            android:textColor="?attr/message_point_bg"
+            android:textColor="#BBFFFFFF"
             android:textStyle="bold"
             android:textSize="16sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="选择周次"
-            android:textColor="?attr/timetable_topbar_hint_textcolor"
+            android:textColor="#AAFFFFFF"
             android:textSize="10sp" />
     </LinearLayout>
 

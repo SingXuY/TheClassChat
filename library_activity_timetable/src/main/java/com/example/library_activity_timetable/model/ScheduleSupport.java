@@ -157,31 +157,6 @@ public class ScheduleSupport {
         return data;
     }
 
-    //课程名称**根据id
-    public static List<Schedule> transform_only_names(List<? extends ScheduleEnable> dataSource) {
-        List<Schedule> data = new ArrayList<>();
-        int i;
-        boolean judge;
-        //设置首值
-        for (i = 0; i < dataSource.size(); i++) {
-            if (dataSource.get(i) != null) {
-                data.add(dataSource.get(i).getSchedule());
-                break;
-            }
-        }
-        for(int j=i+1;j < dataSource.size();j++){
-            judge=true;
-            if (dataSource.get(j) != null) {
-                /*for(int k=0;k<j;k++){
-                    if((dataSource.get(j).getSchedule().getId()).equals(data.get(k).getId()))
-                        judge=false;
-                }*/
-                if(judge) data.add(dataSource.get(j).getSchedule());
-            }
-        }
-        return data;
-    }
-
     /**
      * 将源数据拆分为数组的七个元素，每个元素为一个集合，
      * 依次为周一-周日的课程集合

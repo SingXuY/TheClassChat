@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.library_activity_timetable.R;
 import com.example.library_activity_timetable.model.ScheduleSupport;
-import com.example.library_activity_timetable.utils.ColorUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -26,27 +25,24 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
     protected TextView[] textViews = new TextView[8];
     protected LinearLayout[] layouts = new LinearLayout[8];
 
-    protected int background = Color.parseColor("#8D91AA");
-    protected float alpha = 1;
+    protected int background = Color.parseColor("#BBFFFFFF");
 
     protected String[] dateArray;
     protected List<String> weekDates;
     protected LinearLayout layout;
 
     public OnDateBuildAapter setBackground(int background) {
-        this.background = background;
+        this.background = background ;
         return this;
     }
 
     @Override
-    public void onInit(LinearLayout layout, float alpha) {
-        this.alpha = alpha;
+    public void onInit(LinearLayout layout) {
         this.layout = layout;
         //星期设置
         dateArray = getStringArray();
         weekDates = ScheduleSupport.getWeekDate();
-        int alphaColor = ColorUtils.alphaColor(background, alpha);
-        if (layout != null) layout.setBackgroundColor(alphaColor);
+        if (layout != null) layout.setBackgroundColor(background);
     }
 
     @Override
@@ -149,8 +145,7 @@ public class OnDateBuildAapter implements ISchedule.OnDateBuildListener {
 
     protected void activeDateBackground(int weekDay) {
         if (layouts.length > weekDay && layouts[weekDay] != null) {
-            layouts[weekDay].setBackgroundColor(
-                    ColorUtils.alphaColor(Color.parseColor("#AA8D91AA"), alpha));
+            layouts[weekDay].setBackgroundColor(Color.parseColor("#dbdbdb"));
         }
     }
 }

@@ -4,21 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorThem">#9507a6e6</color>
-    <color name="black_2c">#2c2c2c</color>
     <color name="write">#FFFFFF</color>
-    <color name="theme">#03A9F4</color>
+    <color name="theme">#AA00D8A0</color>
     <color name="bottom_navigation_normal">#CCCCCC</color>
-    <color name="app_header_bg">#FFFFFF</color>
-    <color name="app_white_slight">#FBFBFB</color>
-    <color name="app_gold">#BBFF7A59</color>
-    <color name="theme_dark">#2A3033</color>
-    <color name="theme_dark2">#787C7E</color>
-    <color name="app_white">#ffffff</color>
-
-    <color name="layer_grid_line">#000000</color>
-
-
-    <color name="coursedetail_bg">#8D91AA</color>
-
 
 </resources>

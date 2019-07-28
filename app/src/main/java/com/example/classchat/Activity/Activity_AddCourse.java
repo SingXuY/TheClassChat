@@ -2,6 +2,10 @@ package com.example.classchat.Activity;
 
 //手动添加课程页面
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Environment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,7 +29,7 @@ import com.example.classchat.Object.MySubject;
 import com.example.classchat.R;
 import com.example.classchat.Util.SharedUtil;
 import com.example.classchat.Util.Util_BlockchainTool;
-import com.example.classchat.Util.Util_Net;
+import com.example.library_cache.Cache;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,6 +53,14 @@ public class Activity_AddCourse extends AppCompatActivity {
     private Button add;
     private Button back;
 
+    private View view;
+
+    //缓存
+    private String mClassBoxData = "";
+
+    //广播
+    private LocalBroadcastManager localBroadcastManager;
+
     //提示框builder
     private AlertDialog.Builder builder1;
     private AlertDialog.Builder builder2;
@@ -63,17 +75,6 @@ public class Activity_AddCourse extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(SharedUtil.getShartData(this,"name").equals("0")){
-            SharedUtil.setShartData(this,"day");
-        }
-        if(SharedUtil.getShartData(this,"name").equals("night")){
-            //设置夜晚主题  需要在setContentView之前
-            setTheme(R.style.nightTheme);
-        }else{
-            //设置白天主题
-            setTheme(R.style.dayTheme);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__add_course);
 
@@ -88,10 +89,6 @@ public class Activity_AddCourse extends AppCompatActivity {
         end=(EditText)findViewById(R.id.get_course_end);
         back=(Button)findViewById(R.id.back_from_addCourse_button);
         choose_week=(TextView)findViewById(R.id.choose_week);
-
-
-
-
 
         //周数多选框
         mutilChoicebuilder = new AlertDialog.Builder(this);
@@ -161,7 +158,7 @@ public class Activity_AddCourse extends AppCompatActivity {
             }
         });
 
-
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
 
 
 
@@ -196,10 +193,6 @@ public class Activity_AddCourse extends AppCompatActivity {
         });
 
 
-
-
-
-
         //返回
         back.setOnClickListener(new OnClickListener() {
             @Override
@@ -220,6 +213,7 @@ public class Activity_AddCourse extends AppCompatActivity {
                 int start_;
                 int end_;
                 int step;
+
                 //若有文本框未编辑
                 if(TextUtils.isEmpty(teacher.getText())||TextUtils.isEmpty(course.getText())||TextUtils.isEmpty(room.getText())||TextUtils.isEmpty(dayOfWeek.getText())|| TextUtils.isEmpty(start.getText())||TextUtils.isEmpty(end.getText())||weeksnum.size()==0)
                 {
@@ -233,15 +227,47 @@ public class Activity_AddCourse extends AppCompatActivity {
                     if (end_ < start_) { builder2.show(); }
                     else if(dayOfWeek_<1||dayOfWeek_>7){builder3.show();}
                     else {
-                        MySubject item = new MySubject( course_, room_, teacher_, weeksnum, start_, step, dayOfWeek_, null);
+                        MySubject item = new MySubject( course_, room_, teacher_, weeksnum, start_, step, dayOfWeek_, null,0);
 
-                        Intent intent = new Intent();
-                        intent.setClass(Activity_AddCourse.this,MainActivity.class);
-                        startActivity(intent);
+                        mClassBoxData= Cache.with(v.getContext())
+                                .path(getCacheDir(v.getContext()))
+                                .getCache("classBox", String.class);
+
+                        List<MySubject> mySubjects = JSON.parseArray(mClassBoxData, MySubject.class);
+
+                        mySubjects.add(item);
+
+                        mClassBoxData=mySubjects.toString();
+
+                        Log.v("mySubjects",mClassBoxData);
+
+                        Cache.with(v.getContext())
+                                .path(getCacheDir(v.getContext()))
+                                .saveCache("classBox", mClassBoxData);
+
+                        Intent intent1 = new Intent("com.example.broadcasttest.LOCAL_BROADCAST");
+                        localBroadcastManager.sendBroadcast(intent1);
+
+                        Intent intent2 = new Intent();
+                        intent2.setClass(Activity_AddCourse.this,MainActivity.class);
+                        startActivity(intent2);
                     }
                 }
             }
         });
 
+    }
+    /*
+     * 获得缓存地址
+     * */
+    public String getCacheDir(Context context) {
+        String cachePath;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            cachePath = context.getExternalCacheDir().getPath();
+        } else {
+            cachePath = context.getCacheDir().getPath();
+        }
+        return cachePath;
     }
 }

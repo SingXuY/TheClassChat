@@ -5,45 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="?attr/search_bg"
+    android:background="#FFFFFF"
     tools:context=".Activity.Activity_AddSearchCourse">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:padding="3dp"
-        android:background="?attr/search_top_bg"
-        android:layout_height="56dp">
+        android:background="#AA00D8A0"
+        android:layout_height="60dp">
+
         <Button
             android:layout_marginLeft="3dp"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
             android:id="@+id/back_from_searchAddCourse_button"
             android:background="@drawable/icon_back"/>
+
         <EditText
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/edit_search"
             android:paddingLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:textColor="?attr/search_top_edit_textcolor"
+            android:layout_gravity="center_vertical"
+            android:textColor="#717171"
             android:hint="输入课程名称"
-            android:background="?attr/search_top_edit_bg"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:background="@drawable/xml_edittext_bg"
+            android:textSize="17sp"
+            android:layout_weight="1" />
         <Button
             android:id="@+id/add_personally"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="5dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/icon_edit"
-            android:layout_height="40dp" />
+            android:background="@drawable/edit_square" />
 
     </LinearLayout>
 
     <ListView
         android:id="@+id/search_list"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

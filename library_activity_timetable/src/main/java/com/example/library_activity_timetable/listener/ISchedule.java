@@ -139,9 +139,8 @@ public interface ISchedule {
         /**
          * 初始化方法
          * @param layout 日期栏容器
-         * @param alpha 透明度
          */
-        void onInit(LinearLayout layout, float alpha);
+        void onInit(LinearLayout layout);
     }
 
     /**
@@ -165,9 +164,8 @@ public interface ISchedule {
         /**
          * 初始化方法
          * @param layout 日期栏容器
-         * @param alpha 透明度
          */
-        void onInit(LinearLayout layout, float alpha);
+        void onInit(LinearLayout layout);
 
         /**
          * 获取View数组

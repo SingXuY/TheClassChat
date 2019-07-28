@@ -18,7 +18,6 @@ import com.example.library_activity_timetable.listener.OnSlideBuildAdapter;
 import com.example.library_activity_timetable.listener.OnSpaceItemClickAdapter;
 import com.example.library_activity_timetable.listener.OnWeekChangedAdapter;
 import com.example.library_activity_timetable.model.Schedule;
-import com.example.library_activity_timetable.model.ScheduleColorPool;
 import com.example.library_activity_timetable.model.ScheduleEnable;
 import com.example.library_activity_timetable.model.ScheduleSupport;
 import com.example.library_activity_timetable.operater.AbsOperater;
@@ -72,25 +71,15 @@ public class Activity_TimetableView extends LinearLayout {
     private int flagBgcolor = Color.rgb(220, 230, 239);//背景颜色
     private boolean isShowFlaglayout = true;
 
-    //本周、非本周的弧度
-    private int thisWeekCorner=5;
-    private int nonThisWeekCorner=0;
 
     //侧边项的最大个数
     private int maxSlideItem = 12;
 
-    //颜色池
-    private ScheduleColorPool colorPool;
-
     //是否显示非本周课程
     private boolean isShowNotCurWeek = true;
 
-    //课程项、侧边栏、日期栏的透明度，1：不透明，0：透明
-    private float itemAlpha = 1, slideAlpha = 1, dateAlpha = 1;
-
     //课程项文本颜色
     private int itemTextColorWithThisWeek = Color.DKGRAY;//本周
-    private int itemTextColorWithNotThis = Color.WHITE;//非本周
 
     private boolean isShowWeekends=true;
 
@@ -130,15 +119,9 @@ public class Activity_TimetableView extends LinearLayout {
         return isShowWeekends;
     }
 
-    public AbsOperater operater(){
-        if(operater==null) operater=new SimpleOperater();
+    public AbsOperater operater() {
+        if (operater == null) operater = new SimpleOperater();
         return operater;
-    }
-
-    public Activity_TimetableView operater(AbsOperater operater) {
-        operater.init(context,attrs,this);
-        this.operater = operater;
-        return this;
     }
 
     /**
@@ -153,36 +136,12 @@ public class Activity_TimetableView extends LinearLayout {
     }
 
     /**
-     * 设置侧边栏宽度px
-     *
-     * @param monthWidthPx
-     * @return
-     */
-    public Activity_TimetableView monthWidthPx(int monthWidthPx) {
-        this.monthWidth = monthWidthPx;
-        return this;
-    }
-
-    /**
      * 获取侧边栏宽度px
      *
      * @return
      */
     public int monthWidth() {
         return this.monthWidth;
-    }
-
-    /**
-     * 课程项文本颜色
-     *
-     * @param color      颜色
-     * @param isThisWeek 是否本周，true：设置当前周文本颜色，false：设置非本周文本颜色
-     * @return
-     */
-    public Activity_TimetableView itemTextColor(int color, boolean isThisWeek) {
-        if (isThisWeek) itemTextColorWithThisWeek = color;
-        else itemTextColorWithNotThis = color;
-        return this;
     }
 
     /**
@@ -194,69 +153,6 @@ public class Activity_TimetableView extends LinearLayout {
         return itemTextColorWithThisWeek;
     }
 
-    /**
-     * 获取非本周课程项文本颜色
-     *
-     * @return
-     */
-    public int itemTextColorWithNotThis() {
-        return itemTextColorWithNotThis;
-    }
-
-    /**
-     * 获取课程项透明度
-     *
-     * @return
-     */
-    public float itemAlpha() {
-        return itemAlpha;
-    }
-
-    /**
-     * 获取侧边栏透明度
-     *
-     * @return
-     */
-    public float slideAlpha() {
-        return slideAlpha;
-    }
-
-    /**
-     * 获取日期栏透明度
-     *
-     * @return
-     */
-    public float dateAlpha() {
-        return dateAlpha;
-    }
-
-    /**
-     * 透明度设置
-     *
-     * @param dateAlpha  日期栏透明度
-     * @param slideAlpha 侧边栏透明度
-     * @param itemAlpha  课程项透明度
-     * @return
-     */
-    public Activity_TimetableView alpha(float dateAlpha, float slideAlpha, float itemAlpha) {
-        this.itemAlpha = itemAlpha;
-        this.slideAlpha = slideAlpha;
-        this.dateAlpha = dateAlpha;
-        return this;
-    }
-
-    /**
-     * 将三个透明度统一设置
-     *
-     * @param allAlpha 日期栏、侧边栏、课程项的透明度
-     * @return
-     */
-    public Activity_TimetableView alpha(float allAlpha) {
-        this.itemAlpha = allAlpha;
-        this.slideAlpha = allAlpha;
-        this.dateAlpha = allAlpha;
-        return this;
-    }
 
     /**
      * 设置旗标布局背景颜色
@@ -269,15 +165,6 @@ public class Activity_TimetableView extends LinearLayout {
         return this;
     }
 
-    /**
-     * 重置旗标布局背景色
-     *
-     * @return
-     */
-    public Activity_TimetableView resetFlagBgcolor() {
-        flagBgcolor(Color.rgb(220, 230, 239));
-        return this;
-    }
 
     /**
      * 获取是否显示旗标布局
@@ -629,53 +516,6 @@ public class Activity_TimetableView extends LinearLayout {
     }
 
     /**
-     * 设置本周课程的弧度
-     *
-     * @param thisWeekCorner 弧度
-     * @return
-     */
-    public Activity_TimetableView thisWeekCorner(int thisWeekCorner) {
-        this.thisWeekCorner = thisWeekCorner;
-        return this;
-    }
-
-    /**
-     * 设置本周、非本周相同的弧度
-     *
-     * @param cornerValue 弧度
-     * @return
-     */
-    public Activity_TimetableView cornerAll(int cornerValue) {
-        corner(cornerValue, true);
-        corner(cornerValue, false);
-        return this;
-    }
-
-    /**
-     * 课程角度设置
-     *
-     * @param corner     角度px
-     * @param isThisWeek 是否本周上
-     * @return
-     */
-    public Activity_TimetableView corner(int corner, boolean isThisWeek) {
-        if (isThisWeek) thisWeekCorner = corner;
-        else nonThisWeekCorner = corner;
-        return this;
-    }
-
-    /**
-     * 获取课程角度
-     *
-     * @param isThisWeek 是否本周上
-     * @return
-     */
-    public int corner(boolean isThisWeek) {
-        if (isThisWeek) return thisWeekCorner;
-        return nonThisWeekCorner;
-    }
-
-    /**
      * 设置是否显示非本周课程
      *
      * @param showNotCurWeek 如果为true，将显示非本周，否则隐藏非本周
@@ -693,27 +533,6 @@ public class Activity_TimetableView extends LinearLayout {
      */
     public boolean isShowNotCurWeek() {
         return isShowNotCurWeek;
-    }
-
-    /**
-     * 获取颜色池
-     *
-     * @return ScheduleColorPool
-     * @see ScheduleColorPool
-     */
-    public ScheduleColorPool colorPool() {
-        if (colorPool == null) colorPool = new ScheduleColorPool(context);
-        return colorPool;
-    }
-
-    /**
-     * dp->px
-     *
-     * @param dp
-     * @return
-     */
-    public int dp2px(int dp) {
-        return context.getResources().getDimensionPixelSize(dp);
     }
 
     /**

@@ -17,6 +17,6 @@
         android:id="@+id/id_timetableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/timetable_bg"/>
+        android:background="#FFFFFF"/>
 
 </LinearLayout>

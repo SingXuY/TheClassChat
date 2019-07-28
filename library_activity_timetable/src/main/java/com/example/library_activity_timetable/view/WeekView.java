@@ -1,6 +1,7 @@
 package com.example.library_activity_timetable.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -206,18 +207,17 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView> {
                 @Override
                 public void onClick(View view) {
                     resetBackground();
+                    perLayout.setBackgroundColor(Color.parseColor("#33717171"));
                     preIndex=tmp;
-                    perLayout.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.weekview_white));
                     onWeekItemClickedListener().onWeekClicked(tmp);
                 }
             });
-
             layouts.add(perLayout);
             textViews.add(bottomText);
             container.addView(view);
         }
         if(curWeek>0&&curWeek<=layouts.size()){
-            layouts.get(curWeek-1).setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.weekview_thisweek));
+            layouts.get(curWeek-1).setBackgroundColor(Color.parseColor("#33717171"));
         }
         return this;
     }
@@ -238,11 +238,11 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView> {
             else{
                 textViews.get(i).setText("");
             }
-            layouts.get(i).setBackgroundColor(getContext().getResources().getColor(R.color.app_course_chooseweek_bg));
+            layouts.get(i).setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
 
         if(curWeek>0&&curWeek<=layouts.size()){
-            layouts.get(curWeek-1).setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.weekview_thisweek));
+            layouts.get(curWeek-1).setBackgroundColor(Color.parseColor("#33717171"));
         }
         return this;
     }
@@ -251,8 +251,8 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView> {
      * 重置背景色
      */
     public void resetBackground(){
-        layouts.get(preIndex-1).setBackgroundColor(getContext().getResources().getColor(R.color.app_course_chooseweek_bg));
-        layouts.get(curWeek-1).setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.weekview_thisweek));
+        layouts.get(preIndex-1).setBackgroundColor(Color.parseColor("#FFFFFF"));
+        layouts.get(curWeek-1).setBackgroundColor(Color.parseColor("#33717171"));
     }
 
     /**

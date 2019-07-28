@@ -6,31 +6,28 @@
     android:layout_height="wrap_content"
     >
 
-
         <!--  课程信息 -->
-        <TextView
-            android:id="@+id/id_course_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="2dp"
-            android:textColor="@color/theme_black"
-            android:textSize="12sp"
-            android:background="@drawable/xml_decoration_line" />
-
-
-
+    <TextView
+        android:id="@+id/id_course_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="2dp"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:background="@drawable/green_bg"/>
 
     <!-- 右上角提示圆点 -->
     <TextView
-        android:id="@+id/id_course_item_count"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:id="@+id/id_course_messagecount"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="right|top"
         android:background="@drawable/xml_pinkpoint_round"
         android:gravity="center"
-        android:textColor="@color/app_white"
-        android:textSize="12sp"
+        android:textColor="#AA00D8A0"
+        android:textSize="13sp"
         android:visibility="gone" />
 
 </FrameLayout>

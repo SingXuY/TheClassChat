@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.library_activity_timetable.R;
-import com.example.library_activity_timetable.utils.ColorUtils;
 
 /**
  * 控件实现的一个可以显示时间的侧边栏适配器
@@ -29,7 +28,6 @@ public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
 
     //侧边栏背景色
     protected int background= Color.WHITE;
-    protected float alpha=1;
 
     /**
      * 设置时刻数组
@@ -41,8 +39,8 @@ public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
         return this;
     }
 
-    public OnSlideBuildAdapter setBackground(int backgroundColor) {
-        this.background=backgroundColor;
+    public OnSlideBuildAdapter setBackground(int background) {
+        this.background=background;
         return this;
     }
 
@@ -97,15 +95,13 @@ public class OnSlideBuildAdapter implements ISchedule.OnSlideBuildListener {
 
         numberTextView.setText((pos+1)+"");
         numberTextView.setTextSize(textSize);
-        numberTextView.setTextColor(0xFFDCE2EC);
+        numberTextView.setTextColor(0xBB000000);
 
         return view;
     }
 
     @Override
-    public void onInit(LinearLayout layout, float alpha) {
-        this.alpha=alpha;
-        int alphaColor=ColorUtils.alphaColor(0x8D91AA,alpha);
-        if(layout!=null) layout.setBackgroundColor(alphaColor);
+    public void onInit(LinearLayout layout) {
+        if(layout!=null) layout.setBackgroundColor(Color.parseColor("#FFFFFF"));
     }
 }
