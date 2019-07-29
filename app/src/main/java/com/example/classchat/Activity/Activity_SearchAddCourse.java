@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.text.TextUtils;
@@ -24,8 +23,7 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.example.classchat.Object.MySubject;
 import com.example.classchat.R;
-import com.example.classchat.Util.SharedUtil;
-import com.example.classchat.Util.Util_Net;
+import com.example.classchat.Util.Util_NetUtil;
 import com.example.library_cache.Cache;
 
 import org.jetbrains.annotations.NotNull;
@@ -254,7 +252,7 @@ public class Activity_SearchAddCourse extends AppCompatActivity {
                                 .add("subject", JSON.toJSONString(item))
                                 .build();
 
-                        Util_Net.sendOKHTTPRequest("http://106.12.105.160:8081/addcourse", requestBody, new Callback() {
+                        Util_NetUtil.sendOKHTTPRequest("http://106.12.105.160:8081/addcourse", requestBody, new Callback() {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 

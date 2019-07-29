@@ -7,13 +7,19 @@
         <item name="colorPrimaryDark">@android:color/holo_blue_light</item>
         <item name="colorAccent">@android:color/holo_blue_light</item>
     </style>
-    <!--  顶部导航 -->
+    <!-- 顶部导航的风格 -->
     <style name="top_nav">
-        <item name="android:background">#fff</item>
+        <item name="android:background">#EDEDED</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">44dp</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- 下划线风格 -->
+    <style name="EditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#EDEDED</item>
+        <item name="colorControlActivated">#BBEEEE</item>
     </style>
 
     <style name="common_line_gray_90">

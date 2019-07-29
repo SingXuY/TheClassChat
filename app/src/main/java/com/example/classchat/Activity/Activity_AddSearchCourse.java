@@ -21,8 +21,7 @@ import android.widget.ListView;
 
 import com.example.classchat.Adapter.Adapter_SearchCourseListView;
 import com.example.classchat.R;
-import com.example.classchat.Util.SharedUtil;
-import com.example.classchat.Util.Util_Net;
+import com.example.classchat.Util.Util_NetUtil;
 import com.example.classchat.model.AddCourseDataBase;
 
 import org.jetbrains.annotations.NotNull;
@@ -124,7 +123,7 @@ public class Activity_AddSearchCourse extends AppCompatActivity {
                         .add("condition", s.toString())
                         .build();
 
-                Util_Net.sendOKHTTPRequest("http://106.12.105.160:8082/searchcourse", requestBody, new Callback() {
+                Util_NetUtil.sendOKHTTPRequest("http://106.12.105.160:8082/searchcourse", requestBody, new Callback() {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
 

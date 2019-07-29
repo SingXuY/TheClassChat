@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/user_head"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="182****5882"
+                android:text="测试账号"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
@@ -215,13 +215,14 @@
         android:layout_below="@+id/fourbuttons"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text=""
-            android:background="#00FFFFFF"/>
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:text=""-->
+            <!--android:background="#00FFFFFF"/>-->
 
         <LinearLayout
+            android:layout_marginTop="15dp"
             android:id="@+id/shimingrenzheng"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -251,11 +252,7 @@
 
 
         </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text=""
-            android:background="#00FFFFFF"/>
+
 
         <LinearLayout
             android:id="@+id/bangzhuyufankui"

@@ -12,15 +12,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.classchat.Fragment.Fragment_ClassBox;
 import com.example.classchat.Fragment.Fragment_Forum;
 import com.example.classchat.Fragment.Fragment_SelfInformationCenter;
 import com.example.classchat.Fragment.Fragment_Shopping;
 import com.example.classchat.R;
 import com.example.classchat.Util.SharedUtil;
+import com.example.classchat.Util.Util_NetUtil;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
     List<Fragment> mFragments;
     AlertDialog builder=null;
 
-    private String correctId = "18801356149";//接收ID所用的变量
-    private int isAuthentation;
+    private String correctId;
+    private boolean isAuthentation;
+    private String password;
+    private String imageUrl;
+    private String nickName;
 
 
     @Override
@@ -65,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
+        correctId = intent.getStringExtra("userId");
+        getUserInfo();
 
 //        initView();
         initBottomNavigation();
@@ -129,13 +147,40 @@ public class MainActivity extends AppCompatActivity {
         ft.commitAllowingStateLoss();
     }
 
-    public String getId(){
+    public String getId() {
         return correctId;
     }
 
-    public int  getIsAuthentation(){
-        return isAuthentation;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
+    public String getNickName() {
+        return nickName;
+    }
 
+    public String getPassword() {
+        return password;
+    }
+
+    private void getUserInfo() {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("userId", correctId)
+                .build();
+
+        Util_NetUtil.sendOKHTTPRequest("", requestBody, new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                JSONObject jsonObject = JSON.parseObject(response.toString());
+                nickName = jsonObject.getString("nickname");
+                imageUrl = jsonObject.getString("ico");
+                isAuthentation = Boolean.parseBoolean(jsonObject.getString("authentationstatus"));
+            }
+        });
+    }
 }

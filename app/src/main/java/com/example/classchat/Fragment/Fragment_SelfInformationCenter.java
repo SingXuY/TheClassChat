@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.classchat.Activity.Activity_IdAuthentation;
 import com.example.classchat.Activity.MainActivity;
 import com.example.classchat.R;
@@ -41,15 +42,9 @@ public class Fragment_SelfInformationCenter extends Fragment {
 
     private String correctId;
     private String name;
-    private String headPic;
-
     private Double money;
+    private String imageUrl;
 
-    //判断是否实名认证
-    private int isAuthentation;
-    private byte[] bytes;
-
-    protected static final int UPDATE_PICTURE = 1;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
@@ -72,15 +67,22 @@ public class Fragment_SelfInformationCenter extends Fragment {
         //获得用户ID
         MainActivity activity = (MainActivity)getActivity();
         correctId = activity.getId();
-        isAuthentation = activity.getIsAuthentation();
+        name = activity.getNickName();
+        imageUrl = activity.getImageUrl();
 
-        //textViewforId.setText(correctId);//设置ID显示
+        //加载数据和图片
+        textViewforId.setText(correctId);
+        textViewforName.setText(name);
+        Glide.with(this).load(imageUrl).into(avatarImageView);
 
         //加入点击事件
         linearLayoutforAnquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("userId", correctId);
+                intent.putExtra("userName", name);
+                intent.putExtra("headUrl", imageUrl);
                 startActivity(intent);
 
             }
@@ -109,12 +111,12 @@ public class Fragment_SelfInformationCenter extends Fragment {
         linearLayoutforRenzheng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Activity_IdAuthentation.class);
-                intent.putExtra("id",correctId);
-                if(isAuthentation == 1)
-                    startActivity(intent);
-                else
-                    Toast.makeText(getActivity(),"您已经实名认证过了",Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(getActivity(), Activity_IdAuthentation.class);
+//                intent.putExtra("id",correctId);
+//                if(isAuthentation == 1)
+//                    startActivity(intent);
+//                else
+//                    Toast.makeText(getActivity(),"您已经实名认证过了",Toast.LENGTH_SHORT).show();
             }
         });
         linearLayoutforShoucang.setOnClickListener(new View.OnClickListener() {

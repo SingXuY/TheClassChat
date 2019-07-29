@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.classchat">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK.STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK.STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -14,7 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.Activity_SearchAddCourse"/>
+        <activity android:name=".Activity.Activity_Modify"></activity>
+        <activity android:name=".Activity.Activity_Password" />
+        <activity android:name=".Activity.Activity_AccountInfo" />
+        <activity android:name=".Activity.Activity_SearchAddCourse" />
         <activity android:name=".Activity.Activity_AddSearchCourse" />
         <activity android:name=".Activity.Activity_AddCourse" />
         <activity android:name=".Activity.Activity_TransactionHistory" />
