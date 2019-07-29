@@ -18,14 +18,15 @@ public class Adapter_SearchCourseListView extends BaseAdapter {
     LayoutInflater inflater;
     List<AddCourseDataBase> ls;
     Context mContext;
+    String userId;
 
     AddCourseDataBase medium;
 
-    public Adapter_SearchCourseListView(Context context, List<AddCourseDataBase> objects){
+    public Adapter_SearchCourseListView(Context context, List<AddCourseDataBase> objects, String userId){
         mContext=context;
         this.inflater=LayoutInflater.from(context);
         this.ls=objects;
-
+        this.userId = userId;
     }
 
     public boolean isEnabled(int position) {
@@ -61,7 +62,8 @@ public class Adapter_SearchCourseListView extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(mContext, Activity_SearchAddCourse .class);
+                intent.setClass(mContext, Activity_SearchAddCourse.class);
+                intent.putExtra("userId", userId);
                 intent.putExtra("course",item.getCourseName());
                 intent.putExtra("id",item.getId());
                 intent.putExtra("teacher",item.getTeacher());

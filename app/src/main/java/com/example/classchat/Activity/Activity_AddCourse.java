@@ -197,9 +197,7 @@ public class Activity_AddCourse extends AppCompatActivity {
         back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(Activity_AddCourse.this,Activity_AddSearchCourse.class);
-                startActivity(intent);
+                finish();
             }
         });
         //点击添加课程

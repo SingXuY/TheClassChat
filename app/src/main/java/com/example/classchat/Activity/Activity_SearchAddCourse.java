@@ -2,10 +2,13 @@ package com.example.classchat.Activity;
 
 //自动添加课程页面
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +71,23 @@ public class Activity_SearchAddCourse extends AppCompatActivity {
     //广播
     private LocalBroadcastManager localBroadcastManager;
 
+    private final static int CHANGE_VIEW = 100;
+
+    //handler处理反应回来的信息
+    @SuppressLint("HandlerLeak")
+    public Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            switch (msg.what){
+                case CHANGE_VIEW:
+                    Intent intent1 = new Intent("com.example.broadcasttest.LOCAL_BROADCAST");
+                    localBroadcastManager.sendBroadcast(intent1);
+                    Intent intent2 = new Intent(Activity_SearchAddCourse.this, MainActivity.class);
+                    startActivity(intent2);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +99,7 @@ public class Activity_SearchAddCourse extends AppCompatActivity {
         final String id= (String) intent.getSerializableExtra("id");
         final String course_name=(String)intent.getSerializableExtra("course");
         final String teacher_name=(String)intent.getSerializableExtra("teacher");
+        final String userId = (String)intent.getSerializableExtra("userId");
 
         //绑定控件
         add=(Button)findViewById(R.id.add_search_button);
@@ -203,9 +224,7 @@ public class Activity_SearchAddCourse extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(Activity_SearchAddCourse.this,Activity_AddSearchCourse.class);
-                startActivity(intent);
+                finish();
             }
         });
         //点击添加课程
@@ -227,15 +246,15 @@ public class Activity_SearchAddCourse extends AppCompatActivity {
                     if(end_<start_) {builder2.show();}
                     else if(dayOfWeek_<1||dayOfWeek_>7){builder3.show();}
                     else {
-                        final MySubject item=new MySubject( course_name, room_, teacher_name, weeksnum, start_, step, dayOfWeek_,id,0);
+                        final MySubject item = new MySubject( course_name, room_, teacher_name, weeksnum, start_, step, dayOfWeek_,id,0);
 
-
+                        System.out.println(userId);
                         RequestBody requestBody = new FormBody.Builder()
-                                .add("id","这应该有一个从MainActivity传来的StudentId")
-                                .add("student", JSON.toJSONString(item))
+                                .add("userId",userId)
+                                .add("subject", JSON.toJSONString(item))
                                 .build();
 
-                        Util_Net.sendOKHTTPRequest("", requestBody, new Callback() {
+                        Util_Net.sendOKHTTPRequest("http://106.12.105.160:8081/addcourse", requestBody, new Callback() {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
@@ -244,6 +263,7 @@ public class Activity_SearchAddCourse extends AppCompatActivity {
                             @Override
                             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                                 boolean responseData = Boolean.parseBoolean(response.body().string());
+                                System.out.println(responseData);
                                 if (responseData) {
 
                                     mClassBoxData= Cache.with(v.getContext())
@@ -259,13 +279,9 @@ public class Activity_SearchAddCourse extends AppCompatActivity {
                                     Cache.with(v.getContext())
                                             .path(getCacheDir(v.getContext()))
                                             .saveCache("classBox", mClassBoxData);
-
-                                    Intent intent1 = new Intent("com.example.broadcasttest.LOCAL_BROADCAST");
-                                    localBroadcastManager.sendBroadcast(intent1);
-
-                                    Intent intent2 = new Intent();
-                                    intent2.setClass(Activity_SearchAddCourse.this,MainActivity.class);
-                                    startActivity(intent2);
+                                    Message message = new Message();
+                                    message.what = CHANGE_VIEW;
+                                    handler.sendMessage(message);
                                 }
                             }
                         });

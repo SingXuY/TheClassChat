@@ -50,7 +50,9 @@ public class Activity_AddSearchCourse extends AppCompatActivity {
     private Button back;
     private Button add;
     private Context mContext;
-    private List<AddCourseDataBase> items;
+    private List<AddCourseDataBase> items = new ArrayList<>();
+
+    private String userId;
 
     private static final int GET = 1;
 
@@ -60,7 +62,7 @@ public class Activity_AddSearchCourse extends AppCompatActivity {
         public void handleMessage(Message msg){
             switch (msg.what){
                 case GET:
-                    list.setAdapter(new Adapter_SearchCourseListView(mContext,items));
+                    list.setAdapter(new Adapter_SearchCourseListView(mContext,items,userId));
                     break;
             }
         }
@@ -70,6 +72,9 @@ public class Activity_AddSearchCourse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__add_search_course);
+
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("userId");
 
 
         //绑定控件
@@ -129,11 +134,10 @@ public class Activity_AddSearchCourse extends AppCompatActivity {
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
                         String responsedata = response.body().string();
-
-
-
+                        System.out.println(responsedata);
                         try {
                             JSONArray jsonArray = new JSONArray(responsedata);
+                            items.clear();
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 AddCourseDataBase item=new AddCourseDataBase(jsonObject.getString("groupChatId"), jsonObject.getString("courseName"), jsonObject.getString("teacher"), jsonObject.getString("students"));
@@ -142,8 +146,6 @@ public class Activity_AddSearchCourse extends AppCompatActivity {
                             Message message = new Message();
                             message.what = GET;
                             handler.sendMessage(message);
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -159,9 +161,7 @@ public class Activity_AddSearchCourse extends AppCompatActivity {
         back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(Activity_AddSearchCourse.this,MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
         //跳转手动添加

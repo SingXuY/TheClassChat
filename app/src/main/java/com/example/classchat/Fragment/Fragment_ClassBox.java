@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.classchat.Activity.Activity_AddSearchCourse;
+import com.example.classchat.Activity.MainActivity;
 import com.example.classchat.Object.MySubject;
 import com.example.classchat.R;
 import com.example.classchat.Util.Util_NetUtil;
@@ -75,6 +76,9 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
     TextView titleTextView;
     List<MySubject> mySubjects = new ArrayList<MySubject>();
 
+    //学生ID
+    private String userId;
+
     //对话框
     Dialog coursedetail_dialog;
 
@@ -92,6 +96,8 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
     private UPDATEcastReceiver updatereceiver;
     private LocalBroadcastManager localBroadcastManager;
 
+    private Context mcontext;
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return  inflater.inflate(R.layout.activity__main__timetable, container, false);
 
@@ -99,7 +105,9 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        mcontext = this.getActivity();
+        MainActivity mainActivity = (MainActivity)getActivity();
+        userId = mainActivity.getId();
         moreButton =(ImageButton)getActivity().findViewById(R.id.id_more);
         moreButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -129,31 +137,32 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
      */
     private void initClassBoxData(){
 
-        /*
-        Cache.with(myContext.getActivity())
-                .path(getCacheDir(myContext.getActivity()))
-                .remove("classBox");*/
 
-        //mClassBoxData="[{'id':'123', 'name':'计算机', 'teacher':'ABC', 'room':'A1-101', 'stringweeklist':'5,6,7', 'start':'1', 'step':'4', 'day':'2', 'messagecount':'3'},  {'id':'456', 'name':'网络工程', 'teacher':'ABC', 'room':'A1-101', 'stringweeklist':'5,6,7', 'start':'1', 'step':'4', 'day':'4', 'messagecount':'0'}]";
+//        Cache.with(myContext.getActivity())
+//                .path(getCacheDir(myContext.getActivity()))
+//                .remove("classBox");
+
+//        mClassBoxData="[{'id':'123', 'name':'计算机', 'teacher':'ABC', 'room':'A1-101', 'stringweeklist':'5,6,7', 'start':'1', 'step':'4', 'day':'2', 'messagecount':'3'},  {'id':'456', 'name':'网络工程', 'teacher':'ABC', 'room':'A1-101', 'stringweeklist':'5,6,7', 'start':'1', 'step':'4', 'day':'4', 'messagecount':'0'}]";
 
 
         mClassBoxData= Cache.with(this.getActivity())
                 .path(getCacheDir(this.getActivity()))
                 .getCache("classBox", String.class);
 
-        Log.v("mySubjects1",mClassBoxData);
+//        Log.v("mySubjects1",mClassBoxData);
 
-        Cache.with(myContext.getActivity())
-                .path(getCacheDir(myContext.getActivity()))
-                .saveCache("classBox", mClassBoxData);
+//        Cache.with(myContext.getActivity())
+//                .path(getCacheDir(myContext.getActivity()))
+//                .saveCache("classBox", mClassBoxData);
 
         if (mClassBoxData==null||mClassBoxData.length()<=0){
             //TODO  mClassBoxData=接收的json字符串
             // 请求网络方法，获取数据
+            System.out.println(userId);
             RequestBody requestBody = new FormBody.Builder()
-                    .add("id", "这里应该有从MainActivity传来的studentid")
+                    .add("userId", userId)
                     .build();
-            Util_NetUtil.sendOKHTTPRequest("", requestBody,new Callback() {
+            Util_NetUtil.sendOKHTTPRequest("http://106.12.105.160:8081/getallcourse", requestBody,new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
                     //TODO  mClassBoxData=接收的json字符串
@@ -164,6 +173,7 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     // 得到服务器返回的具体内容
                     String responseData = response.body().string();
+                    System.out.println(responseData);
                     mClassBoxData = responseData;
                     // 转化为具体的对象列表
                     List<String> jsonlist = JSON.parseArray(responseData, String.class);
@@ -182,14 +192,15 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
                             .saveCache("classBox", mClassBoxData);
                 }
             });
+        } else {
+
+            Log.v("here", "here");
+
+            mySubjects.clear();
+            mySubjects = JSON.parseArray(mClassBoxData, MySubject.class);
+
+            Log.v("mySubjects", mySubjects.toString());
         }
-
-        Log.v("here","here");
-
-        mySubjects.clear();
-        mySubjects=JSON.parseArray(mClassBoxData,MySubject.class);
-
-        Log.v("mySubjects",mySubjects.toString());
 
     }
     /*
@@ -437,6 +448,7 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
      */
     protected void addSubject() {
         Intent add = new Intent(getActivity(), Activity_AddSearchCourse.class);
+        add.putExtra("userId",userId);
         startActivity(add);
     }
 
@@ -498,13 +510,30 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
     /*
     * 广播
     * */
-    class UPDATEcastReceiver extends BroadcastReceiver {
+    class
+
+    UPDATEcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent){
 
-            initClassBoxData();
-            mTimetableView.updateView();
-            mWeekView.updateView();
+            System.out.println(mcontext);
+
+            mClassBoxData = Cache.with(mcontext)
+                    .path(getCacheDir(mcontext))
+                    .getCache("classBox", String.class);
+
+            List<String> jsonlist = JSON.parseArray(mClassBoxData, String.class);
+
+            mySubjects.clear();
+
+            for(String s : jsonlist) {
+                MySubject mySubject = JSON.parseObject(s, MySubject.class);
+                mySubjects.add(mySubject);
+            }
+
+            initTimetableView();
+
+            System.out.println("接收陈宫");
 
         }
     }

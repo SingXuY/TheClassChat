@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     List<Fragment> mFragments;
     AlertDialog builder=null;
 
-    private String correctId;//接收ID所用的变量
+    private String correctId = "18801356149";//接收ID所用的变量
     private int isAuthentation;
 
 
