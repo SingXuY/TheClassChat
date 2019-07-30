@@ -138,9 +138,9 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
     private void initClassBoxData(){
 
 
-//        Cache.with(myContext.getActivity())
-//                .path(getCacheDir(myContext.getActivity()))
-//                .remove("classBox");
+        Cache.with(myContext.getActivity())
+                .path(getCacheDir(myContext.getActivity()))
+                .remove("classBox");
 
 //        mClassBoxData="[{'id':'123', 'name':'计算机', 'teacher':'ABC', 'room':'A1-101', 'stringweeklist':'5,6,7', 'start':'1', 'step':'4', 'day':'2', 'messagecount':'3'},  {'id':'456', 'name':'网络工程', 'teacher':'ABC', 'room':'A1-101', 'stringweeklist':'5,6,7', 'start':'1', 'step':'4', 'day':'4', 'messagecount':'0'}]";
 
@@ -276,16 +276,16 @@ public class Fragment_ClassBox extends Fragment implements OnClickListener {
                         titleTextView.setText("第" + curWeek + "周");
                     }
                 })
-                //旗标布局点击监听
-                .callback(new ISchedule.OnFlaglayoutClickListener() {
-                    @Override
-                    public void onFlaglayoutClick(int day, int start) {
-                        mTimetableView.hideFlaglayout();
-                        Toast.makeText(getActivity(),
-                                "点击了旗标:周" + (day + 1) + ",第" + start + "节",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                })
+//                //旗标布局点击监听
+//                .callback(new ISchedule.OnFlaglayoutClickListener() {
+//                    @Override
+//                    public void onFlaglayoutClick(int day, int start) {
+//                        mTimetableView.hideFlaglayout();
+//                        Toast.makeText(getActivity(),
+//                                "点击了旗标:周" + (day + 1) + ",第" + start + "节",
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                })
                 .showView();
         hideNonThisWeek();
     }

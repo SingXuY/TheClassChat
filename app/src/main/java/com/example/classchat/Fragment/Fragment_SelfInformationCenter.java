@@ -1,5 +1,6 @@
 package com.example.classchat.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.classchat.Activity.Activity_AccountInfo;
 import com.example.classchat.Activity.Activity_IdAuthentation;
 import com.example.classchat.Activity.MainActivity;
 import com.example.classchat.R;
@@ -79,7 +81,7 @@ public class Fragment_SelfInformationCenter extends Fragment {
         linearLayoutforAnquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                Intent intent = new Intent(getActivity(), Activity_AccountInfo.class);
                 intent.putExtra("userId", correctId);
                 intent.putExtra("userName", name);
                 intent.putExtra("headUrl", imageUrl);

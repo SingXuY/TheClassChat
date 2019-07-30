@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
-        correctId = intent.getStringExtra("userId");
+        correctId = "18801356149";
         getUserInfo();
 
 //        initView();
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 .add("userId", correctId)
                 .build();
 
-        Util_NetUtil.sendOKHTTPRequest("", requestBody, new Callback() {
+        Util_NetUtil.sendOKHTTPRequest("http://106.12.105.160:8081/getuserinfo", requestBody, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                JSONObject jsonObject = JSON.parseObject(response.toString());
+                JSONObject jsonObject = JSON.parseObject(response.body().string());
                 nickName = jsonObject.getString("nickname");
                 imageUrl = jsonObject.getString("ico");
                 isAuthentation = Boolean.parseBoolean(jsonObject.getString("authentationstatus"));

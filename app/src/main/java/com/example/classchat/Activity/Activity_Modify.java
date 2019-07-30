@@ -70,9 +70,9 @@ public class Activity_Modify extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__modify);
 
-        // 去除ActionBar
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+//        // 去除ActionBar
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
 
         // 为控件绑定成员
         ivReturn = findViewById(R.id.iv_modifyname_return);

@@ -241,7 +241,8 @@ public class SimpleOperater extends AbsOperater {
      */
     protected void onPanelClicked(View view, float y) {
         if(mView.isShowFlaglayout()){
-            flagLayout.setVisibility(View.VISIBLE);
+            flagLayout.setVisibility(View.GONE);
+//            flagLayout.setVisibility(View.VISIBLE);
         }else{
             flagLayout.setVisibility(View.GONE);
         }
@@ -307,28 +308,28 @@ public class SimpleOperater extends AbsOperater {
             /**
              * 点击空白格子时才会触发这个事件
              */
-            panels[i].setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View arg0, MotionEvent arg1) {
-                    switch (arg1.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            x = arg1.getX();
-                            y = arg1.getY();
-
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            float x2 = arg1.getX();
-                            float y2 = arg1.getY();
-                            if (x2 == x && y2 == y)
-                                onPanelClicked(arg0, arg1.getY());
-                            break;
-                        default:
-                            break;
-                    }
-                    return true;
-                }
-            });
+//            panels[i].setOnTouchListener(new View.OnTouchListener() {
+//
+//                @Override
+//                public boolean onTouch(View arg0, MotionEvent arg1) {
+//                    switch (arg1.getAction()) {
+//                        case MotionEvent.ACTION_DOWN:
+//                            x = arg1.getX();
+//                            y = arg1.getY();
+//
+//                            break;
+//                        case MotionEvent.ACTION_UP:
+//                            float x2 = arg1.getX();
+//                            float y2 = arg1.getY();
+//                            if (x2 == x && y2 == y)
+//                                onPanelClicked(arg0, arg1.getY());
+//                            break;
+//                        default:
+//                            break;
+//                    }
+//                    return true;
+//                }
+//            });
         }
     }
 

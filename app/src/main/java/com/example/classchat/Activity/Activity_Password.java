@@ -21,6 +21,7 @@ import com.example.classchat.Util.Util_NetUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.nio.file.SecureDirectoryStream;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -72,9 +73,9 @@ public class Activity_Password extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__password);
 
-        // 去除ActionBar
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+//        // 去除ActionBar
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
 
         // TODO 获得学生ID
         Intent intent = getIntent();
@@ -93,7 +94,7 @@ public class Activity_Password extends AppCompatActivity {
             public void onClick(View v) {
                 if (etOldPassword.getText().toString().equals("") || etNewPassword.getText().toString().equals("") || etVerifyPassword.getText().toString().equals("")) {
                     Toast.makeText(Activity_Password.this, "您的信息不足，请继续填写", Toast.LENGTH_SHORT).show();
-                } else if (etNewPassword.getText().toString() == etVerifyPassword.getText().toString()) {
+                } else if (!etNewPassword.getText().toString().equals(etVerifyPassword.getText().toString())) {
                     Toast.makeText(Activity_Password.this, "确认密码须与新密码相同，请重新填写", Toast.LENGTH_SHORT).show();
                     etVerifyPassword.setText("");
                 } else {
@@ -110,6 +111,8 @@ public class Activity_Password extends AppCompatActivity {
                             .add("oldpsw", etOldPassword.getText().toString())
                             .add("newpsw", etNewPassword.getText().toString())
                             .build();
+
+                    System.out.println(etOldPassword.getText().toString());
 
                     Util_NetUtil.sendOKHTTPRequest("http://106.12.105.160:8081/changepsw", requestBody, new Callback() {
                         @Override

@@ -111,9 +111,10 @@ public class Activity_AccountInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__account_info);
 
-        // 去除ActionBar
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+//        // 去除ActionBar
+//        ActionBar actionBar = getSupportActionBar();
+//        assert actionBar != null;
+//        actionBar.hide();
 
         // TODO 获得学生ID
         Intent intent = getIntent();
@@ -282,7 +283,7 @@ public class Activity_AccountInfo extends AppCompatActivity {
         }
         if (Build.VERSION.SDK_INT >= 24){
             imageUri = FileProvider.getUriForFile(Activity_AccountInfo.this,
-                    "com.example.personinformation.camera.fileprovider",outputImage);
+                    "com.example.theclasschat.camera.fileprovider",outputImage);
         } else {
             imageUri = Uri.fromFile(outputImage);
         }
