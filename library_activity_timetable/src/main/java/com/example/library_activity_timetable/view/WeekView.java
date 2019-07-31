@@ -36,8 +36,6 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView> {
     //跟布局
     LinearLayout root;
 
-    //左侧按钮
-    LinearLayout leftlayout;
 
     //数据
     private List<Schedule> dataSource;
@@ -170,7 +168,6 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView> {
         mInflate.inflate(R.layout.view_weekview, this);
         container = findViewById(R.id.id_weekview_container);
         root=findViewById(R.id.id_root);
-        leftlayout=findViewById(R.id.id_weekview_leftlayout);
     }
 
     /**
@@ -185,12 +182,7 @@ public class WeekView extends LinearLayout implements WeekViewEnable<WeekView> {
         layouts=new ArrayList<>();
         textViews=new ArrayList<>();
 
-        leftlayout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onWeekLeftClickedListener().onWeekLeftClicked();
-            }
-        });
+
 
         for (int i = 1; i <= itemCount; i++) {
             final int tmp=i;

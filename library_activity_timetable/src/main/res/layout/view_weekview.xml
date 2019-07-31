@@ -7,20 +7,6 @@
     android:background="#22717171"
     android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/id_weekview_leftlayout"
-        android:layout_width="60dp"
-        android:layout_height="90dp"
-        android:gravity="center"
-        android:background="#44717171"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="#BB000000"
-            android:text="  修改  \n当前周"/>
-    </LinearLayout>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
